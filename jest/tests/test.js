@@ -1,4 +1,3 @@
-// src/tests/login.test.js
 const puppeteer = require('puppeteer');
 const LoginPage = require('../../pages/Jest/LoginPage/LoginPage');
 
@@ -17,13 +16,14 @@ afterAll(async () => {
 });
 
 describe('Login Page', () => {
-  test('should load login page', async () => {
+
+  test('deve carregar a página de login', async () => {
     await loginPage.visit();
     const title = await page.title();
     expect(title).toBe('Swag Labs');
   });
 
-  test('should login with valid credentials', async () => {
+  test('deve fazer login com credenciais válidas', async () => {
     await loginPage.enterUsername('standard_user');
     await loginPage.enterPassword('secret_sauce');
     await loginPage.submitLogin();
@@ -32,12 +32,41 @@ describe('Login Page', () => {
     expect(url).toBe('https://www.saucedemo.com/v1/inventory.html');
   });
 
-  test('should show error with invalid credentials', async () => {
+  test('deve mostrar erro com credenciais inválidas', async () => {
+    await loginPage.visit();
     await loginPage.enterUsername('invalid_user');
     await loginPage.enterPassword('invalid_password');
     await loginPage.submitLogin();
 
     const errorText = await page.$eval('[data-test="error"]', el => el.textContent);
     expect(errorText).toContain('Epic sadface: Username and password do not match any user in this service');
+  });
+
+  test('deve mostrar erro quando o username estiver ausente', async () => {
+    await loginPage.visit();
+    await loginPage.enterPassword('secret_sauce');  
+    await loginPage.submitLogin();
+
+    const errorText = await page.$eval('[data-test="error"]', el => el.textContent);
+    expect(errorText).toContain('Epic sadface: Username is required');
+  });
+
+  test('deve mostrar erro quando a senha estiver ausente', async () => {
+    await loginPage.visit();
+    await loginPage.enterUsername('standard_user');  
+    await loginPage.submitLogin();
+
+    const errorText = await page.$eval('[data-test="error"]', el => el.textContent);
+    expect(errorText).toContain('Epic sadface: Password is required');
+  });
+
+  test('deve mostrar erro para usuário bloqueado', async () => {
+    await loginPage.visit();
+    await loginPage.enterUsername('locked_out_user');
+    await loginPage.enterPassword('secret_sauce');
+    await loginPage.submitLogin();
+
+    const errorText = await page.$eval('[data-test="error"]', el => el.textContent);
+    expect(errorText).toContain('Epic sadface: Sorry, this user has been locked out.');
   });
 });

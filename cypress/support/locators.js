@@ -35,7 +35,7 @@ const locators = {
     TOTAL_PRICE: '.summary_total_label',
     FINISH_BTN: '.btn_action',
     MSG_SUCCESS: '.complete-header'
-    }
+          }
 }
 
 export default locators;

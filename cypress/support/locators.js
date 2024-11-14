@@ -12,10 +12,12 @@ const locators = {
     },
 
     HOME:{
+        FILTRO: '.product_sort_container',
         PRODUCT: '.inventory_item',
         PRODUCT_NAME: '.inventory_item_name',
         ADD_PRODUCT_CART: '.btn_primary',
-        REMOVE_PRODUCT_CART: '.btn_secondary'
+        REMOVE_PRODUCT_CART: '.btn_secondary',
+        PRODUCT_PRICE: '.inventory_item_price'
     },
 
     CARRINHO: {
@@ -35,7 +37,11 @@ const locators = {
     TOTAL_PRICE: '.summary_total_label',
     FINISH_BTN: '.btn_action',
     MSG_SUCCESS: '.complete-header'
-          }
+          },
+
+    FILTRO:{
+    
+    }
 }
 
 export default locators;

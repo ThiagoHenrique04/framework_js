@@ -25,7 +25,7 @@ it('deve calcular o preço total corretamente', () => {
     cy.deveCalcularPreçoTotalCorretamente()
 })
 
-it.only('Realizar compra de um produto', () => {
+it('Realizar compra de um produto', () => {
     cy.realizarCompraDoProduto()
 })
   
